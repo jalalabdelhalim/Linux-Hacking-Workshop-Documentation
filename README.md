@@ -6,7 +6,7 @@ This workshop is designed to give students hands-on experience in ethical hackin
 1. **Attacker Machine** (`containerX`) - This serves as the attacker's system.
 2. **Target Machine** (`targetmachineX`) - A vulnerable machine for exploitation.
 
-A central **Ubuntu VM** hosts a web portal where students can log in and access their assigned containers. The setup utilizes **Shellinabox** for web-based terminal access, **Flask** for user authentication, and **Nginx** as a reverse proxy.
+A central **Ubuntu VM** hosts a web portal where students can log in and access their assigned containers. The setup utilizes **Shellinabox** for web-based terminal access, **Flask** for user authentication, and **Nginx** as a reverse proxy. This entire setup was implemented on a **Dell R760 Edge Server running Proxmox PVE**.
 
 ## System Architecture
 The system consists of:
@@ -94,17 +94,12 @@ server {
 ```
 
 ### 5. Enable the Site and Restart Nginx
-These commands ensure Nginx is configured correctly and active:
 ```bash
 sudo ln -s /etc/nginx/sites-available/reverse-proxy /etc/nginx/sites-enabled/
 sudo rm /etc/nginx/sites-enabled/default
 sudo nginx -t
 sudo systemctl reload nginx
 ```
-- `ln -s /etc/nginx/sites-available/reverse-proxy /etc/nginx/sites-enabled/` creates a symbolic link to enable the reverse proxy configuration.
-- `rm /etc/nginx/sites-enabled/default` removes the default configuration to avoid conflicts.
-- `nginx -t` tests the configuration for errors.
-- `systemctl reload nginx` applies the changes without restarting the service.
 
 ### 6. Verify Running Services
 Check if **Flask and Nginx** are running correctly:
@@ -119,6 +114,12 @@ tcp   0      0 0.0.0.0:8080         LISTEN   nginx: master
 tcp   0      0 PUBLIC_IP:5000       LISTEN   python3 app.py
 ```
 Ensure Flask is bound to the public IP and Nginx is listening on port **8080**.
+
+## Images and Documentation Files
+```markdown
+![Proxmox Network Configuration](docs/pve_network.png)
+![Network Interface in VM](docs/network_vm.png)
+```
 
 ## Tools Installed on the Attacking Machine
 The following tools are pre-installed on the attacking container:
@@ -147,7 +148,6 @@ The target machine includes:
   sudo ufw enable
   ```
 - **Harden Nginx** to prevent unauthorized access.
-- **Regularly rotate passwords** for security.
 
 ## License
 This project is released under the MIT License.
