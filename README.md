@@ -19,12 +19,16 @@ The system consists of:
 - **A Linux bridge in Proxmox PVE** is created to allow the VM to connect to the private network. Once created, a new network interface is added to the VM through the hardware tab. After this, running `ifconfig` will show a new network adapter, which must be configured in Netplan with a private IP.
 
 ### **Creating a Linux Bridge in Proxmox**
+![Proxmox Network Configuration](docs/pve_network.png)
+
 1. Navigate to **Proxmox PVE > Network**.
 2. Click **Create** and select **Linux Bridge**.
 3. Assign the appropriate **CIDR and Gateway** (e.g., `172.16.230.1/24`).
 4. Apply the configuration and restart networking.
 
 ### **Assigning the Network Interface to a VM**
+![Network Interface in VM](docs/network_vm.png)
+
 1. Go to the **Hardware tab** of the target VM in Proxmox.
 2. Click **Add** > **Network Device**.
 3. Select the newly created bridge (e.g., `vmbr410`).
@@ -115,11 +119,12 @@ tcp   0      0 PUBLIC_IP:5000       LISTEN   python3 app.py
 ```
 Ensure Flask is bound to the public IP and Nginx is listening on port **8080**.
 
-## Images and Documentation Files
-```markdown
-![Proxmox Network Configuration](docs/pve_network.png)
-![Network Interface in VM](docs/network_vm.png)
-```
+## Web Application UI
+### Login Page
+![Login Page](docs/login.png)
+
+### Dashboard
+![Dashboard](docs/dashboard1.png)
 
 ## Tools Installed on the Attacking Machine
 The following tools are pre-installed on the attacking container:
@@ -136,7 +141,7 @@ The target machine includes:
 - **OpenSSH** - SSH service enabled for remote access.
 
 ## Student Access Process
-1. Students log in at `your-workshop-domain.com`
+1. Students log in by typing the public IP followed by the port 5000
 2. The dashboard lists assigned containers.
 3. Clicking a container opens **Shellinabox** for web-based terminal access.
 
